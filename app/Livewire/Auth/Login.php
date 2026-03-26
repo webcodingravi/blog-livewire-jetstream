@@ -27,11 +27,11 @@ class Login extends Component
                 return $this->redirectRoute('author.pending');
             }
 
-            if ($user->role === 'admin') {
+            if ($user->hasRole('admin')) {
                 return $this->redirectRoute('admin.dashboard');
             }
 
-            if ($user->role === 'author' && $user->status === 'approved') {
+            if ($user->hasRole('author') && $user->status === 'approved') {
                 return $this->redirectRoute('author.dashboard');
             }
 
@@ -52,13 +52,15 @@ class Login extends Component
                     return $this->redirectRoute('author.pending');
                 }
 
-                if ($user->role === 'admin') {
+                if ($user->hasRole('admin')) {
                     return $this->redirectRoute('admin.dashboard');
                 }
 
-                if ($user->role === 'author') {
+                if ($user->hasRole('author')) {
                     return $this->redirectRoute('author.dashboard');
                 }
+
+                $this->reset(['email', 'password', 'remember_me']);
 
                 return $this->redirectRoute('home');
 

@@ -1,13 +1,13 @@
 @if (session()->has('success'))
-    <div class="bg-white inline-flex space-x-3 p-3 text-sm rounded border border-gray-200" x-data="{
-        open: true,
-        init() {
-            setTimeout(() => {
-                this.show = false
-            }, 3000)
-        }
-    }"
-        x-show="open" x-transition>
+    <div class="bg-white inline-flex space-x-3 p-3 text-sm rounded border border-gray-200" x-show="open" x-transition
+        x-data="{
+            open: true,
+            init() {
+                setTimeout(() => {
+                    this.show = false
+                }, 3000)
+            }
+        }">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M16.5 8.31V9a7.5 7.5 0 1 1-4.447-6.855M16.5 3 9 10.508l-2.25-2.25" stroke="#22C55E"
                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -26,15 +26,15 @@
         </button>
     </div>
 @elseif (session()->has('error'))
-    <div class="flex items-center justify-between text-red-600 max-w-80 w-full bg-white shadow h-10"
-        x-data="{
+    <div class="flex items-center justify-between text-red-600 max-w-80 w-full bg-white shadow h-10" x-show="open"
+        x-transition x-data="{
             open: true,
             init() {
                 setTimeout(() => {
                     this.show = false
                 }, 3000)
             }
-        }" x-show="open" x-transition>
+        }">
         <div class="h-full w-1.5 bg-red-600"></div>
         <div class="flex items-center">
             <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon line">

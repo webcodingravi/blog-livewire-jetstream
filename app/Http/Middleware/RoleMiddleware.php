@@ -20,7 +20,8 @@ class RoleMiddleware
         }
 
         $user = auth()->user();
-        if (! in_array($user->role, $roles)) {
+        // 🔥 correct role check
+        if (! $user->hasAnyRole($roles)) {
             abort(403);
         }
 

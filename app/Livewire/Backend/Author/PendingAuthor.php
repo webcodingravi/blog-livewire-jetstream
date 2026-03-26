@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Author;
+namespace App\Livewire\Backend\Author;
 
 use Livewire\Component;
 
@@ -8,6 +8,6 @@ class PendingAuthor extends Component
 {
     public function render()
     {
-        return view('author.pending-author');
+        return view('backend.author.pending-author');
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
-use App\Livewire\Admin\Dashboard;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
-use App\Livewire\Author\Dashboard as AuthorDashboard;
-use App\Livewire\Author\PendingAuthor;
+use App\Livewire\Backend\Admin\CategoryManage;
+use App\Livewire\Backend\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Backend\Admin\PostManage;
+use App\Livewire\Backend\Admin\SettingsManage;
+use App\Livewire\Backend\Admin\UserManage;
+use App\Livewire\Backend\Author\Dashboard as AuthorDashboard;
+use App\Livewire\Backend\Author\PendingAuthor as AuthorPendingAuthor;
 use App\Livewire\Front\BlogDetails;
 use App\Livewire\Front\Home;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +23,7 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified']], function () {
-    Route::get('/pending', PendingAuthor::class)->name('author.pending');
+    Route::get('/pending', AuthorPendingAuthor::class)->name('author.pending');
 
 });
 
@@ -28,5 +32,10 @@ Route::group(['prefix' => 'author', 'as' => 'author.', 'middleware' => ['auth:sa
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role:admin']], function () {
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
+    Route::get('/users', UserManage::class)->name('users');
+    Route::get('/categories', CategoryManage::class)->name('category');
+    Route::get('/posts', PostManage::class)->name('post');
+    Route::get('/settings', SettingsManage::class)->name('settings');
+
 });
