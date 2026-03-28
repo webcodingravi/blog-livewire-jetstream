@@ -25,7 +25,7 @@
 
         </div>
         <div class="flex lg:flex-row flex-col justify-between gap-12 l">
-            <div class=" bg-white shadow-md flex flex-col gap-2 w-[400px] rounded-lg justify-center">
+            <div class=" bg-white shadow-md flex flex-col gap-2 w-[400px] rounded-lg h-[150px] pt-4">
                 <button @click="activeTab = 'system'"
                     :class="activeTab === 'system'
                         ?

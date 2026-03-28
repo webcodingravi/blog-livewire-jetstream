@@ -11,6 +11,7 @@
         type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+
     @stack('style')
     @vite(['resources/css/admin/app.css', 'resources/js/admin/app.js'])
     @livewireStyles
@@ -61,7 +62,6 @@
             }
         });
     </script>
-
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js">
     </script>
     @stack('script')

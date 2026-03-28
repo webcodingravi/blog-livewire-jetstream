@@ -12,12 +12,12 @@
     @livewireStyles
 </head>
 
-<body>
+<body class="min-h-screen">
     <livewire:components.front.header />
     <main>
         {{ $slot }}
     </main>
-    <x-front.footer />
+
     @livewireScripts
 </body>
 

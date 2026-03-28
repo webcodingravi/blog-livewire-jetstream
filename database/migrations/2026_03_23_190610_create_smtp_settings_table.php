@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::create('smtp_settings', function (Blueprint $table) {
             $table->id();
             $table->string('website_name')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('favicon')->nullable();
-            $table->string('address')->nullable();
-            $table->string('mobile_no')->nullable();
-            $table->string('email')->nullable();
-            $table->string('facebook_link')->nullable();
-            $table->string('instagram_link')->nullable();
-            $table->string('twitter_link')->nullable();
+            $table->string('mail_mailer')->nullable();
+            $table->string('mail_host')->nullable();
+            $table->string('mail_port')->nullable();
+            $table->string('mail_username')->nullable();
+            $table->string('mail_password')->nullable();
+            $table->string('mail_encryption')->nullable();
+            $table->string('mail_from_address')->nullable();
             $table->timestamps();
         });
     }

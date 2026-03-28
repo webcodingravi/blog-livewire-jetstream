@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Backend\Admin;
 
+use App\Exports\PostsExport;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PostManage extends Component
 {
@@ -32,6 +35,8 @@ class PostManage extends Component
     public $meta_title;
 
     public $meta_description;
+
+    public $tags = [];
 
     public $postId = null;
 
@@ -106,6 +111,7 @@ class PostManage extends Component
             $this->meta_title = $post->meta_title;
             $this->meta_description = $post->meta_description ?? '';
             $this->oldImage = $post->image;
+            $this->tags = $post->tags->pluck('name')->toArray();
             $this->postId = $post->id;
             $this->openModal();
             $this->isEdit = true;
@@ -133,7 +139,7 @@ class PostManage extends Component
                 $this->image->storeAs('uploads/posts', $imageName, 'public');
 
             }
-            Post::updateOrCreate(
+            $post = Post::updateOrCreate(
                 ['id' => $this->postId],
                 [
                     'title' => $this->title,
@@ -146,6 +152,14 @@ class PostManage extends Component
                     'status' => $this->status,
                     'user_id' => auth()->id(),
                 ]);
+
+            $tagIds = [];
+            foreach ($this->tags as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tagIds[] = $tag->id;
+            }
+
+            $post->tags()->sync($tagIds);
 
             if (! $this->postId) {
                 session()->flash('success', 'Post Successfully Created');
@@ -205,6 +219,11 @@ class PostManage extends Component
             session()->flash('error', 'server error'.$e->getMessage());
 
         }
+    }
+
+
+    public function export() {
+        return Excel::download(new PostsExport,'posts.xlsx');
     }
 
     public function render()

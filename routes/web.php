@@ -9,13 +9,15 @@ use App\Livewire\Backend\Admin\SettingsManage;
 use App\Livewire\Backend\Admin\UserManage;
 use App\Livewire\Backend\Author\Dashboard as AuthorDashboard;
 use App\Livewire\Backend\Author\PendingAuthor as AuthorPendingAuthor;
+use App\Livewire\Front\Blog;
 use App\Livewire\Front\BlogDetails;
 use App\Livewire\Front\Home;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
 
-Route::get('/blog', BlogDetails::class)->name('blog-details');
+Route::get('/blog/{categorySlug}', Blog::class)->name('blog');
+Route::get('/blog-detail/{blogSlug}', BlogDetails::class)->name('blog-details');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', Register::class)->name('register');

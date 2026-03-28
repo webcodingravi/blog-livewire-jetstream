@@ -1,99 +1,74 @@
 <div>
-    <livewire:components.front.hero-section />
+    <section class="relative bg-gray-950  flex pt-[200px] overflow-hidden">
+        <!-- SVG Background -->
+        <div class="absolute inset-0 z-0">
+            <svg class="w-full h-full" viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1f2937" fill-opacity="0.4">
+                    <animate attributeName="d" dur="10s" repeatCount="indefinite"
+                        values="
+                    M0,300 C300,400 1100,200 1440,300 L1440,0 L0,0 Z;
+                    M0,250 C400,350 1000,150 1440,280 L1440,0 L0,0 Z;
+                    M0,300 C300,400 1100,200 1440,300 L1440,0 L0,0 Z
+                    ">
+                    </animate>
+                </path>
+            </svg>
+        </div>
 
-    <section class="bg-slate-800 py-8 min-h-screen">
-        <h1 class="text-3xl font-semibold text-center mx-auto text-gray-400">Blogs</h1>
-        <p class="text-sm text-slate-500 text-center mt-2 max-w-lg mx-auto">
-            Stay ahead of the curve with fresh content on code, design, startups, and everything in between.
-        </p>
-        <div class="w-11/12 mx-auto flex flex-col-reverse lg:flex-row items-start gap-8 mt-12">
+        <div class="relative z-10 flex flex-col gap-8 max-w-8xl mx-auto ">
+            <div class="text-center max-w-6xl">
+                <h1 class="text-white text-3xl lg:text-6xl font-bold uppercase mb-3">
+                    Bulvinar Neque Laoreet Suspendisse Interdum
+                </h1>
 
-            <livewire:components.front.blog.blog-list />
+                <p class="text-gray-300 text-lg">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
 
-            <aside
-                class="w-full lg:w-1/4 bg-gray-900 p-5 rounded-2xl shadow-2xl flex flex-col gap-10 lg:sticky lg:top-20 ">
-                <!-- 🔍 Search -->
-                <div class="flex flex-col gap-3">
-                    <h3 class="text-lg font-semibold text-white">Search</h3>
 
-                    <div class="relative">
-                        <input type="text" placeholder="Search posts..."
-                            class="w-full ps-10 border-gray-700 py-2 rounded-lg bg-gray-700 text-gray-200 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:ring-gray-700 focus:border-gray-700">
+            @if (count($latestPost) > 0)
+                <div class="lg:flex flex-wrap items-center justify-center gap-8 py-16 hidden">
+                    <div class="relative group hover:-translate-y-1 transition duration-300">
 
-                        <svg class="absolute left-3 top-2.5 text-gray-400" width="18" height="18" fill="none"
-                            stroke="currentColor">
-                            <circle cx="8" cy="8" r="7"></circle>
-                            <line x1="13" y1="13" x2="17" y2="17"></line>
-                        </svg>
-                    </div>
-                </div>
+                        @foreach ($latestPost as $post)
+                            <a href="{{ route('blog-details', $post->slug) }}">
+                                <!-- Image -->
+                                <img class="w-full h-[200px] object-cover rounded-xl"
+                                    src="{{ asset('storage/uploads/posts/' . $post->image) }}"
+                                    alt="{{ $post->title }}">
 
-                <!-- 📂 Categories -->
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-lg font-semibold text-white">Categories</h3>
+                            </a>
 
-                    <ul class="flex flex-col gap-2">
-                        <li class="flex justify-between text-gray-300 hover:text-white cursor-pointer">
-                            <span>PHP</span> <span>(12)</span>
-                        </li>
-                        <li class="flex justify-between text-gray-300 hover:text-white cursor-pointer">
-                            <span>Laravel</span> <span>(8)</span>
-                        </li>
-                        <li class="flex justify-between text-gray-300 hover:text-white cursor-pointer">
-                            <span>JavaScript</span> <span>(5)</span>
-                        </li>
-                    </ul>
-                </div>
+                            <span
+                                class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full shadow-md">
+                                <a href="{{ route('blog', $post->category->slug) }}" wire:navigate>
+                                    {{ strtoupper($post->category->name) }}
+                                </a>
+                            </span>
 
-                <!-- 🆕 Latest Posts -->
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-lg font-semibold text-white">Latest Posts</h3>
+                            <a href="{{ route('blog-details', $post->slug) }}" wire:navigate>
+                                <h3 class="text-base text-slate-300 mt-3">
+                                    {{ $post->title }}
+                                </h3>
+                            </a>
+                        @endforeach
 
-                    <div class="flex flex-col gap-4">
 
-                        <div class="flex gap-3 items-center group cursor-pointer">
-                            <img class="w-16 h-16 object-cover rounded-lg"
-                                src="https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?w=200&q=80"
-                                alt="">
-                            <p class="text-sm text-gray-300 group-hover:text-white">
-                                UI Design Tips for Beginners
-                            </p>
-                        </div>
 
-                        <div class="flex gap-3 items-center group cursor-pointer">
-                            <img class="w-16 h-16 object-cover rounded-lg"
-                                src="https://images.unsplash.com/photo-1714974528646-ea024a3db7a7?w=200&q=80"
-                                alt="">
-                            <p class="text-sm text-gray-300 group-hover:text-white">
-                                Laravel Best Practices
-                            </p>
-                        </div>
+
+
 
                     </div>
+
+
+
                 </div>
-
-                <!-- 🏷️ Tags -->
-                <div class="flex flex-col gap-4">
-                    <h3 class="text-lg font-semibold text-white">Tags</h3>
-
-                    <div class="flex flex-wrap gap-2">
-                        <span
-                            class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm hover:bg-indigo-500 hover:text-white cursor-pointer">PHP</span>
-                        <span
-                            class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm hover:bg-indigo-500 hover:text-white cursor-pointer">Laravel</span>
-                        <span
-                            class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm hover:bg-indigo-500 hover:text-white cursor-pointer">UI</span>
-                        <span
-                            class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm hover:bg-indigo-500 hover:text-white cursor-pointer">Design</span>
-                    </div>
-                </div>
-
-            </aside>
+            @endif
 
         </div>
 
-</div>
-</section>
-
+    </section>
 
 </div>

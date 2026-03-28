@@ -18,7 +18,7 @@
                        class="border border-gray-200 rounded-md py-3 focus:outline-none focus:ring-0 focus:shadow-none focus:border-gray-200 text-sm w-[300px]"
                        placeholder="Search...">
 
-                   <button
+                   <button wire:click="export" wire:navigate
                        class="inline-flex bg-green-500 py-3 px-4 rounded-md text-white active:scale-90 duration-300 transition-all text-sm">
                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -77,7 +77,7 @@
                                    </th>
                                    <th
                                        class="p-6 text-xs font-medium tracking-wider text-left text-gray-200 uppercase bg-gray-700">
-                                       Title
+                                       Post
                                    </th>
                                    <th
                                        class="p-6 text-xs font-medium tracking-wider text-left text-gray-200 uppercase bg-gray-700">
@@ -119,7 +119,9 @@
                                                </span>
                                            </td>
 
-                                           <td class="p-6">
+                                           <td class="p-6 flex gap-4 items-center">
+                                               <img src="{{ asset('storage/uploads/posts/' . $post->image) }}"
+                                                   alt="{{ $post->title }}" class="w-10 h-10 rounded-md object-cover">
                                                <span class="text-sm text-gray-900">
 
                                                    {{ $post->title }}
@@ -177,53 +179,53 @@
                                                        <path
                                                            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
                                                    </svg>
-                                                   </a>
-                                                   @if (!$showTrashed)
-                                                       <button wire:click="delete({{ $post->id }})"
-                                                           class="ml-2 text-red-600 hover:text-red-900">
-                                                           <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                               height="20" viewBox="0 0 24 24" fill="none"
-                                                               stroke="currentColor" stroke-width="2"
-                                                               stroke-linecap="round" stroke-linejoin="round"
-                                                               class="lucide lucide-trash2-icon lucide-trash-2">
-                                                               <path d="M10 11v6" />
-                                                               <path d="M14 11v6" />
-                                                               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                                               <path d="M3 6h18" />
-                                                               <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                                           </svg>
-                                                       </button>
-                                                   @else
-                                                       <button wire:click="restore({{ $post->id }})"
-                                                           class="ml-2 text-info-600 hover:text-info-900">
-                                                           <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                               height="20" viewBox="0 0 24 24" fill="none"
-                                                               stroke="currentColor" stroke-width="2"
-                                                               stroke-linecap="round" stroke-linejoin="round"
-                                                               class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw">
-                                                               <path
-                                                                   d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                                                               <path d="M3 3v5h5" />
-                                                           </svg>
+                                               </button>
+                                               @if (!$showTrashed)
+                                                   <button wire:click="delete({{ $post->id }})"
+                                                       class="ml-2 text-red-600 hover:text-red-900">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                           height="20" viewBox="0 0 24 24" fill="none"
+                                                           stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                           stroke-linejoin="round"
+                                                           class="lucide lucide-trash2-icon lucide-trash-2">
+                                                           <path d="M10 11v6" />
+                                                           <path d="M14 11v6" />
+                                                           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                                           <path d="M3 6h18" />
+                                                           <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                                       </svg>
+                                                   </button>
+                                               @else
+                                                   <button wire:click="restore({{ $post->id }})"
+                                                       class="ml-2 text-info-600 hover:text-info-900">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                           height="20" viewBox="0 0 24 24" fill="none"
+                                                           stroke="currentColor" stroke-width="2"
+                                                           stroke-linecap="round" stroke-linejoin="round"
+                                                           class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw">
+                                                           <path
+                                                               d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                                                           <path d="M3 3v5h5" />
+                                                       </svg>
 
-                                                       </button>
+                                                   </button>
 
-                                                       <button wire:click="forceDelete({{ $post->id }})"
-                                                           wire:confirm="Are you sure want to Deleted?"
-                                                           class="ml-2 text-red-600 hover:text-red-900">
-                                                           <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                               height="20" viewBox="0 0 24 24" fill="none"
-                                                               stroke="currentColor" stroke-width="2"
-                                                               stroke-linecap="round" stroke-linejoin="round"
-                                                               class="lucide lucide-octagon-x-icon lucide-octagon-x">
-                                                               <path d="m15 9-6 6" />
-                                                               <path
-                                                                   d="M2.586 16.726A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2h6.624a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586z" />
-                                                               <path d="m9 9 6 6" />
-                                                           </svg>
+                                                   <button wire:click="forceDelete({{ $post->id }})"
+                                                       wire:confirm="Are you sure want to Deleted?"
+                                                       class="ml-2 text-red-600 hover:text-red-900">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                           height="20" viewBox="0 0 24 24" fill="none"
+                                                           stroke="currentColor" stroke-width="2"
+                                                           stroke-linecap="round" stroke-linejoin="round"
+                                                           class="lucide lucide-octagon-x-icon lucide-octagon-x">
+                                                           <path d="m15 9-6 6" />
+                                                           <path
+                                                               d="M2.586 16.726A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2h6.624a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586z" />
+                                                           <path d="m9 9 6 6" />
+                                                       </svg>
 
-                                                       </button>
-                                                   @endif
+                                                   </button>
+                                               @endif
 
                                            </td>
                                        </tr>
@@ -369,6 +371,29 @@
                        </div>
 
 
+
+                       <div class="mb-4" x-data="tagsInput()">
+                           <label class="block text-sm font-medium text-gray-700">
+                               Tags
+                           </label>
+
+                           <!-- Input field -->
+                           <input type="text" placeholder="Add tag & press Enter" x-model="newTag"
+                               @keydown.enter.prevent="addTag()"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+
+                           <!-- Existing tags -->
+                           <div class="flex gap-2 flex-wrap">
+                               <template x-for="(tag, index) in tags" :key="index">
+                                   <div class="bg-blue-500  text-white px-2 py-1 rounded flex items-center gap-1 mt-2">
+                                       <span x-text="tag"></span>
+                                       <button type="button" @click="removeTag(index)">×</button>
+                                   </div>
+                               </template>
+                           </div>
+
+                       </div>
+
                        <div class="mb-4 ">
                            <label class="block text-sm font-medium text-gray-700 space-y-2">
                                Status
@@ -432,3 +457,23 @@
 
        @endif
    </div>
+
+   @push('script')
+       <script>
+           function tagsInput() {
+               return {
+                   tags: @entangle('tags'), // Livewire property
+                   newTag: '',
+                   addTag() {
+                       if (this.newTag.trim() !== '' && !this.tags.includes(this.newTag.trim())) {
+                           this.tags.push(this.newTag.trim());
+                           this.newTag = '';
+                       }
+                   },
+                   removeTag(index) {
+                       this.tags.splice(index, 1);
+                   }
+               }
+           }
+       </script>
+   @endpush

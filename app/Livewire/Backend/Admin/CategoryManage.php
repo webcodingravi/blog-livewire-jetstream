@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Backend\Admin;
 
+use App\Exports\CategoriesExport;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryManage extends Component
 {
@@ -155,6 +157,11 @@ class CategoryManage extends Component
     private function resetForm()
     {
         $this->reset(['name', 'slug', 'status', 'meta_title', 'meta_description', 'categoryId', 'isEdit', 'isOpen']);
+    }
+
+    public function export()
+    {
+        return Excel::download(new CategoriesExport, 'categories.xlsx');
     }
 
     public function render()

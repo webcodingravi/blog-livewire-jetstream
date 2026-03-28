@@ -2,14 +2,15 @@
     <div id="sidebar"
         class="h-screen fixed inset-y-0 left-0 lg:w-64 w-full bg-gray-950 text-white transform -translate-x-full md:translate-x-0 md:static md:inset-0 transition duration-300 z-30 ">
         <div class="lg:p-2 px-7 py-2  border-b border-gray-700 lg:ps-6 flex justify-between items-center">
-            <img src="{{ asset('assets/img/logo.png') }}" class="w-20 h-20">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="closeBtn"
-                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-x-icon lucide-x cursor-pointer block lg:hidden">
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-            </svg>
+            <a href="{{ route('home') }}" wire:navigate>
+                <img src="{{ asset('assets/img/logo.png') }}" class="w-20 h-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="closeBtn"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-x-icon lucide-x cursor-pointer block lg:hidden">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+            </a>
         </div>
         <nav class="p-4 space-y-2">
             <a href="{{ route('admin.dashboard') }}" wire:navigate
