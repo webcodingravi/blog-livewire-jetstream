@@ -9,17 +9,16 @@
            <div class=" flex justify-center">
                <x-alert-message />
            </div>
-           <div class="flex lg:flex-row flex-col items-center lg:justify-between">
+           <div class="flex flex-col lg:flex-row  lg:items-center lg:justify-between">
                <h3 class="text-3xl font-medium text-gray-700">All Posts</h3>
-
-               <div class="mt-4 flex lg:flex-row flex-col items-center gap-4">
+               <div class="mt-4 flex lg:flex-row flex-col  lg:items-center gap-4">
 
                    <input type="search" wire:model.live.debounce.500ms="search"
                        class="border border-gray-200 rounded-md py-3 focus:outline-none focus:ring-0 focus:shadow-none focus:border-gray-200 text-sm w-[300px]"
                        placeholder="Search...">
 
                    <button wire:click="export" wire:navigate
-                       class="inline-flex bg-green-500 py-3 px-4 rounded-md text-white active:scale-90 duration-300 transition-all text-sm">
+                       class="inline-flex bg-green-500 py-3 px-4 rounded-md text-white active:scale-90 duration-300 transition-all text-sm w-fit">
                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                            stroke-linejoin="round" class="lucide lucide-file-spreadsheet-icon lucide-file-spreadsheet">
@@ -36,12 +35,12 @@
 
 
                    <button wire:click="$toggle('showTrashed')"
-                       class="inline-flex bg-rose-500 py-3 px-4 rounded-md text-white active:scale-90 duration-300 transition-all text-sm">
+                       class="inline-flex bg-rose-500 py-3 px-4 rounded-md text-white active:scale-90 duration-300 transition-all text-sm w-fit">
                        {{ $showTrashed ? 'Show Active' : 'Show Trash' }}
                    </button>
 
                    <select
-                       class="rounded-md border-gray-200 focus:outline-none focus:ring-0 focus:shadow-none focus:border-gray-200 cursor-pointer"
+                       class="rounded-md border-gray-200 focus:outline-none focus:ring-0 focus:shadow-none focus:border-gray-200 cursor-pointer w-fit"
                        wire:model.live.debounce.500ms= "filterStatus">
                        <option value="">All</option>
                        <option value="draft">Draft</option>
@@ -49,7 +48,7 @@
                    </select>
 
                    <button wire:click="openModal"
-                       class="text-sm px-4 py-3 font-medium text-white bg-gray-950 rounded-md hover:bg-gray-800 active:scale-95 duration-300 transition-all inline-flex gap-2">
+                       class="text-sm px-4 py-3 font-medium text-white bg-gray-950 rounded-md hover:bg-gray-800 active:scale-95 duration-300 transition-all inline-flex gap-2 w-fit">
                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                            stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus">
@@ -67,7 +66,7 @@
 
            <div class="flex flex-col mt-8">
                <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                   <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                   <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 overflow-x-auto">
                        <table class="min-w-full border">
                            <thead>
                                <tr>

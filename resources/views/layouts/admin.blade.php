@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div class="flex h-screen ">
+    <div class="flex min-h-screen">
 
         <!-- Sidebar -->
 
@@ -32,7 +32,7 @@
             <livewire:components.backend.header : />
 
             <!-- Content Area -->
-            <main class="p-4 overflow-y-auto flex-1">
+            <main class="p-4 flex-1 w-full overflow-hidden">
                 {{ $slot }}
             </main>
         </div>
