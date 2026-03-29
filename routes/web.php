@@ -3,11 +3,10 @@
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Backend\Admin\CategoryManage;
-use App\Livewire\Backend\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Backend\Admin\Dashboard;
 use App\Livewire\Backend\Admin\PostManage;
 use App\Livewire\Backend\Admin\SettingsManage;
 use App\Livewire\Backend\Admin\UserManage;
-use App\Livewire\Backend\Author\Dashboard as AuthorDashboard;
 use App\Livewire\Backend\Author\PendingAuthor as AuthorPendingAuthor;
 use App\Livewire\Front\Blog;
 use App\Livewire\Front\BlogDetails;
@@ -30,11 +29,12 @@ Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'),
 });
 
 Route::group(['prefix' => 'author', 'as' => 'author.', 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role:author']], function () {
-    Route::get('/dashboard', AuthorDashboard::class)->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/posts', PostManage::class)->name('post');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role:admin']], function () {
-    Route::get('/dashboard', AdminDashboard::class)->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/users', UserManage::class)->name('users');
     Route::get('/categories', CategoryManage::class)->name('category');
     Route::get('/posts', PostManage::class)->name('post');

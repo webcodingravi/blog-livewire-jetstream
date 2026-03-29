@@ -4,6 +4,7 @@ namespace App\Livewire\Backend\Admin;
 
 use App\Exports\CategoriesExport;
 use App\Models\Category;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,7 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryManage extends Component
 {
-    use WithPagination;
+    use AuthorizesRequests, WithPagination;
 
     public $isOpen = false;
 
@@ -70,6 +71,11 @@ class CategoryManage extends Component
         ];
     }
 
+    public function mount()
+    {
+        $this->authorize('manage_categories');
+    }
+
     public function edit($id)
     {
         try {
@@ -91,6 +97,7 @@ class CategoryManage extends Component
 
     public function createCategory()
     {
+        $this->authorize('manage_categories');
         $this->validate();
         try {
             $category = Category::updateOrCreate(
@@ -118,6 +125,7 @@ class CategoryManage extends Component
 
     public function delete($id)
     {
+        $this->authorize('manage_categories');
         try {
             Category::findOrFail($id)->delete();
 
@@ -130,6 +138,7 @@ class CategoryManage extends Component
 
     public function restore($id)
     {
+        $this->authorize('manage_categories');
         try {
             Category::onlyTrashed()->findOrFail($id)->restore();
 
@@ -143,6 +152,7 @@ class CategoryManage extends Component
 
     public function forceDelete($id)
     {
+        $this->authorize('manage_categories');
         try {
             Category::onlyTrashed()->findOrFail($id)->forceDelete();
 
@@ -161,11 +171,14 @@ class CategoryManage extends Component
 
     public function export()
     {
+        $this->authorize('manage_categories');
+
         return Excel::download(new CategoriesExport, 'categories.xlsx');
     }
 
     public function render()
     {
+        $this->authorize('manage_categories');
         $categories = Category::query()
             ->when($this->showTrashed, function ($query) {
                 $query->onlyTrashed();

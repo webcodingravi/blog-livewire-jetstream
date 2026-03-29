@@ -4,19 +4,25 @@ namespace App\Livewire\Backend\Admin;
 
 use App\Exports\UsersExport;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserManage extends Component
 {
-    use WithPagination;
+    use AuthorizesRequests,WithPagination;
 
     public $showTrashed = false;
 
     public $roleFilter = '';
 
     public $search = '';
+
+    public function mount()
+    {
+        $this->authorize('manage_users');
+    }
 
     public function updatedRoleFilter()
     {
@@ -25,6 +31,7 @@ class UserManage extends Component
 
     public function approveAuthor($id)
     {
+        $this->authorize('manage_users');
         try {
             $user = User::findOrFail($id);
 
@@ -46,6 +53,7 @@ class UserManage extends Component
 
     public function delete($id)
     {
+        $this->authorize('manage_users');
         try {
             User::findOrFail($id)->delete();
             session()->flash('success', 'User Successfully Move to trash');
@@ -57,6 +65,7 @@ class UserManage extends Component
 
     public function restore($id)
     {
+        $this->authorize('manage_users');
         try {
             User::onlyTrashed()->findOrFail($id)->restore();
             session()->flash('success', 'User Successfully Restored');
@@ -68,6 +77,7 @@ class UserManage extends Component
 
     public function forceDelete($id)
     {
+        $this->authorize('manage_users');
         try {
             User::onlyTrashed()->findOrFail($id)->forceDelete();
 
@@ -80,11 +90,14 @@ class UserManage extends Component
 
     public function export()
     {
+        $this->authorize('manage_users');
+
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 
     public function render()
     {
+        $this->authorize('manage_users');
         $users = User::query()
             ->when($this->showTrashed, function ($query) {
                 $query->onlyTrashed();

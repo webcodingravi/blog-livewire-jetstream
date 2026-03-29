@@ -10,17 +10,22 @@ use Livewire\Component;
 class Dashboard extends Component
 {
     public $totalUsers = [];
+
     public $totalCategory = [];
+
     public $totalPost = [];
 
-
-    public function mount() {
-       $this->totalUsers = User::role(['user', 'author'])->count();
+    public function mount()
+    {
+        $this->totalUsers = User::role(['user', 'author'])->count();
         $this->totalCategory = Category::count();
-         $this->totalPost = Post::count();
-
+        $this->totalPost = Post::count();
+        if (auth()->user()->hasRole('admin')) {
+            $this->totalPost = Post::count();
+        } else {
+            $this->totalPost = Post::where('user_id', auth()->id())->count();
+        }
     }
-
 
     public function render()
     {

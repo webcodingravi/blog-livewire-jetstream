@@ -6,6 +6,7 @@ use App\Exports\PostsExport;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PostManage extends Component
 {
-    use WithFileUploads,WithPagination;
+    use AuthorizesRequests,WithFileUploads,WithPagination;
 
     public $title;
 
@@ -183,6 +184,7 @@ class PostManage extends Component
     public function delete($id)
     {
         try {
+            $this->authorize('delete_post');
             Post::findOrFail($id)->delete();
             session()->flash('success', 'Post Successfully move to trash');
 
@@ -195,6 +197,7 @@ class PostManage extends Component
     public function restore($id)
     {
         try {
+            $this->authorize('delete_post');
             Post::onlyTrashed()->findOrFail($id)->restore();
             session()->flash('success', 'Post Successfully Restored');
 
@@ -206,7 +209,10 @@ class PostManage extends Component
 
     public function forceDelete($id)
     {
+
         try {
+
+            $this->authorize('delete_post');
             $post = Post::onlyTrashed()->findOrFail($id);
             $path = 'uploads/posts/'.$post->image;
             if ($post->image && Storage::disk('public')->exists($path)) {
@@ -257,6 +263,10 @@ class PostManage extends Component
             ->when($this->filterStatus !== '', function ($query) {
                 $query->where('status', $this->filterStatus);
             })
+            ->when(! auth()->user()->hasRole('admin'), function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+
             ->orderBy('id', 'desc')
             ->paginate(10);
 
