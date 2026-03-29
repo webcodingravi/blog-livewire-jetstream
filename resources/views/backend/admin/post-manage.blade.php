@@ -351,7 +351,7 @@
                            @endif
                        </div>
 
-                       <<div class="mb-4" x-data x-init="let oldImages = [];
+                       <div class="mb-4" x-data x-init="let oldImages = [];
 
                        function getImages(html) {
                            let div = document.createElement('div');
@@ -363,6 +363,12 @@
                            imageUploadURL: '{{ route('api.blog.image-upload') }}',
                            imageUploadParam: 'image',
                            imageUploadParams: { _token: '{{ csrf_token() }}' },
+                           pastePlain: true,
+                           pasteDeniedAttrs: ['class', 'style'],
+                           pasteDeniedTags: ['style'],
+                           imageDefaultWidth: '100%',
+                           imageResize: true,
+                           imageOutputSize: false,
 
                            events: {
                                initialized: function() {
@@ -416,94 +422,94 @@
 
                            <div id="description"></div>
 
-               </div>
+                       </div>
 
 
 
-               <div class="mb-4" x-data="tagsInput()">
-                   <label class="block text-sm font-medium text-gray-700">
-                       Tags
-                   </label>
+                       <div class="mb-4" x-data="tagsInput()">
+                           <label class="block text-sm font-medium text-gray-700">
+                               Tags
+                           </label>
 
-                   <!-- Input field -->
-                   <input type="text" placeholder="Add tag & press Enter" x-model="newTag"
-                       @keydown.enter.prevent="addTag()"
-                       class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                           <!-- Input field -->
+                           <input type="text" placeholder="Add tag & press Enter" x-model="newTag"
+                               @keydown.enter.prevent="addTag()"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
 
-                   <!-- Existing tags -->
-                   <div class="flex gap-2 flex-wrap">
-                       <template x-for="(tag, index) in tags" :key="index">
-                           <div class="bg-blue-500  text-white px-2 py-1 rounded flex items-center gap-1 mt-2">
-                               <span x-text="tag"></span>
-                               <button type="button" @click="removeTag(index)">×</button>
+                           <!-- Existing tags -->
+                           <div class="flex gap-2 flex-wrap">
+                               <template x-for="(tag, index) in tags" :key="index">
+                                   <div class="bg-blue-500  text-white px-2 py-1 rounded flex items-center gap-1 mt-2">
+                                       <span x-text="tag"></span>
+                                       <button type="button" @click="removeTag(index)">×</button>
+                                   </div>
+                               </template>
                            </div>
-                       </template>
-                   </div>
 
+                       </div>
+
+                       <div class="mb-4 ">
+                           <label class="block text-sm font-medium text-gray-700 space-y-2">
+                               Status
+                           </label>
+                           <select
+                               class="w-full mt-1 border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-0 focus:border-gray-200"
+                               wire:model="status">
+                               <option value="draft">Draft</option>
+                               <option value="published">Published</option>
+                           </select>
+
+                       </div>
+
+                       <div class="mb-4">
+                           <label class="block text-sm font-medium text-gray-700">
+                               Meta Title
+                           </label>
+
+                           <input type="text" wire:model="meta_title"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                               placeholder="Meta Title....">
+
+                       </div>
+
+                       <div class="mb-4">
+                           <label class="block text-sm font-medium text-gray-700">
+                               Meta Description
+                           </label>
+
+                           <textarea wire:model="meta_description"
+                               class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                               placeholder="Meta Description...."></textarea>
+
+                       </div>
+
+                       <button type="submit" wire:loading.attr="disabled" wire:target="createPost"
+                           wire:loading.class="cursor-not-allowed opacity-50"
+                           class="px-4 py-2 font-medium text-white bg-gray-950 rounded-md hover:bg-gray-800 active:scale-95 duration-300 transition-all">
+                           <span wire:target="createPost"
+                               wire:loading.remove>{{ $isEdit ? 'Update Post' : 'Save Post' }}</span>
+
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                               wire:loading wire:target="createPost" stroke-linejoin="round"
+                               class="lucide lucide-loader-icon lucide-loader animate-spin">
+                               <path d="M12 2v4" />
+                               <path d="m16.2 7.8 2.9-2.9" />
+                               <path d="M18 12h4" />
+                               <path d="m16.2 16.2 2.9 2.9" />
+                               <path d="M12 18v4" />
+                               <path d="m4.9 19.1 2.9-2.9" />
+                               <path d="M2 12h4" />
+                               <path d="m4.9 4.9 2.9 2.9" />
+                           </svg>
+                       </button>
+                   </form>
                </div>
 
-               <div class="mb-4 ">
-                   <label class="block text-sm font-medium text-gray-700 space-y-2">
-                       Status
-                   </label>
-                   <select
-                       class="w-full mt-1 border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-0 focus:border-gray-200"
-                       wire:model="status">
-                       <option value="draft">Draft</option>
-                       <option value="published">Published</option>
-                   </select>
-
-               </div>
-
-               <div class="mb-4">
-                   <label class="block text-sm font-medium text-gray-700">
-                       Meta Title
-                   </label>
-
-                   <input type="text" wire:model="meta_title"
-                       class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                       placeholder="Meta Title....">
-
-               </div>
-
-               <div class="mb-4">
-                   <label class="block text-sm font-medium text-gray-700">
-                       Meta Description
-                   </label>
-
-                   <textarea wire:model="meta_description"
-                       class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-400 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                       placeholder="Meta Description...."></textarea>
-
-               </div>
-
-               <button type="submit" wire:loading.attr="disabled" wire:target="createPost"
-                   wire:loading.class="cursor-not-allowed opacity-50"
-                   class="px-4 py-2 font-medium text-white bg-gray-950 rounded-md hover:bg-gray-800 active:scale-95 duration-300 transition-all">
-                   <span wire:target="createPost"
-                       wire:loading.remove>{{ $isEdit ? 'Update Post' : 'Save Post' }}</span>
-
-                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                       fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" wire:loading
-                       wire:target="createPost" stroke-linejoin="round"
-                       class="lucide lucide-loader-icon lucide-loader animate-spin">
-                       <path d="M12 2v4" />
-                       <path d="m16.2 7.8 2.9-2.9" />
-                       <path d="M18 12h4" />
-                       <path d="m16.2 16.2 2.9 2.9" />
-                       <path d="M12 18v4" />
-                       <path d="m4.9 19.1 2.9-2.9" />
-                       <path d="M2 12h4" />
-                       <path d="m4.9 4.9 2.9 2.9" />
-                   </svg>
-               </button>
-               </form>
            </div>
 
-   </div>
 
-
-   @endif
+       @endif
    </div>
 
    @push('script')

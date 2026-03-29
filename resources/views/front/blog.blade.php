@@ -1,5 +1,5 @@
 <div>
-    <section class="bg-slate-800 pt-[60px] pb-9">
+    <section class="bg-slate-800 lg:pt-[300px] pt-[230px] pb-9">
         <h1 class="text-3xl font-semibold text-center mx-auto text-gray-400">Blogs</h1>
         <p class="text-sm text-slate-500 text-center mt-2 max-w-lg mx-auto">
             Stay ahead of the curve with fresh content on code, design, startups, and everything in between.
@@ -31,9 +31,10 @@
                     @if (count($categories) > 0)
                         <ul class="flex flex-col gap-2">
                             @foreach ($categories as $category)
-                                <li class="flex justify-between text-gray-300 hover:text-white cursor-pointer">
+                                <a href="{{ route('blog', $category->slug) }}"
+                                    class="flex justify-between text-gray-300 hover:text-white cursor-pointer">
                                     <span>{{ $category->name }}</span> <span>({{ $category->post->count() }})</span>
-                                </li>
+                                </a>
                             @endforeach
 
 

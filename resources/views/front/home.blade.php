@@ -1,5 +1,5 @@
 <div>
-    <section class="relative bg-gray-950  flex pt-[200px] overflow-hidden">
+    <section class="relative bg-gray-950  flex lg:pt-[350px] pt-[150px]  h-screen">
         <!-- SVG Background -->
         <div class="absolute inset-0 z-0">
             <svg class="w-full h-full" viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg">
@@ -29,10 +29,11 @@
 
 
             @if (count($latestPost) > 0)
-                <div class="lg:flex flex-wrap items-center justify-center gap-8 py-16 hidden">
-                    <div class="relative group hover:-translate-y-1 transition duration-300">
+                <div
+                    class="flex lg:flex-wrap flex-col lg:flex-row lg:items-center lg:justify-center gap-8 py-16 lg:px-0 px-4">
+                    @foreach ($latestPost as $post)
+                        <div class="relative group hover:-translate-y-1 transition duration-300">
 
-                        @foreach ($latestPost as $post)
                             <a href="{{ route('blog-details', $post->slug) }}">
                                 <!-- Image -->
                                 <img class="w-full h-[200px] object-cover rounded-xl"
@@ -53,17 +54,10 @@
                                     {{ $post->title }}
                                 </h3>
                             </a>
-                        @endforeach
 
 
-
-
-
-
-                    </div>
-
-
-
+                        </div>
+                    @endforeach
                 </div>
             @endif
 
