@@ -140,7 +140,7 @@ class PostManage extends Component
 
             }
             $post = Post::updateOrCreate(
-                ['id' => $this->postId],
+                ['id' => $this->postId, 'user_id' => auth()->id()],
                 [
                     'title' => $this->title,
                     'slug' => $this->slug,
@@ -177,7 +177,7 @@ class PostManage extends Component
 
     private function resetForm()
     {
-        $this->reset(['title', 'slug', 'image', 'oldImage', 'description', 'status', 'category_id', 'meta_title', 'meta_description', 'postId', 'isOpen', 'isEdit']);
+        $this->reset(['title', 'slug', 'image', 'oldImage', 'description', 'status', 'category_id', 'meta_title', 'meta_description', 'postId', 'isOpen', 'isEdit', 'tags']);
     }
 
     public function delete($id)
@@ -212,6 +212,17 @@ class PostManage extends Component
             if ($post->image && Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);
             }
+            // Delete images from content
+            preg_match_all('/<img[^>]+src="([^">]+)"/i', $post->description, $matches);
+            if (! empty($matches[1])) {
+                foreach ($matches[1] as $imgUrl) {
+                    $path = str_replace(asset('storage').'/', '', $imgUrl);
+                    if (Storage::disk('public')->exists($path)) {
+                        Storage::disk('public')->delete($path);
+                    }
+                }
+            }
+            $post->tags()->detach();
             $post->forceDelete();
             session()->flash('success', 'Post Successfully Permanently Deleted');
 
@@ -221,9 +232,9 @@ class PostManage extends Component
         }
     }
 
-
-    public function export() {
-        return Excel::download(new PostsExport,'posts.xlsx');
+    public function export()
+    {
+        return Excel::download(new PostsExport, 'posts.xlsx');
     }
 
     public function render()

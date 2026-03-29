@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Home::class)->name('home');
 
 Route::get('/blog/{categorySlug}', Blog::class)->name('blog');
-Route::get('/blog-detail/{blogSlug}', BlogDetails::class)->name('blog-details');
+Route::get('/blog-detail/{blogSlug}', BlogDetails::class)->name('blog-details')->lazy();
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', Register::class)->name('register');

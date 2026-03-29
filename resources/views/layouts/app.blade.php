@@ -12,7 +12,7 @@
     @livewireStyles
 </head>
 
-<body class="min-h-screen">
+<body class="min-h-screen bg-slate-800">
     <livewire:components.front.header />
     <main>
         {{ $slot }}
