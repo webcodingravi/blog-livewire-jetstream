@@ -1,7 +1,9 @@
 <?php
 
+use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Backend\Admin\CategoryManage;
 use App\Livewire\Backend\Admin\CommentManage;
 use App\Livewire\Backend\Admin\Dashboard;
@@ -23,6 +25,8 @@ Route::get('/blog-detail/{blogSlug}', BlogDetails::class)->name('blog-details');
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', Register::class)->name('register');
     Route::get('/login', Login::class)->name('login');
+    Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
+    Route::get('/reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
 Route::group(['middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified']], function () {

@@ -66,6 +66,6 @@ class Register extends Component
 
     public function render()
     {
-        return view('auth.register')->layout('layouts.guest')->layoutData(['metaData' => 'Blog - Register']);
+        return view('auth.register')->layout('layouts.guest')->layoutData(['metaTitle' => 'Register']);
     }
 }

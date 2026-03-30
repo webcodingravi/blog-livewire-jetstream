@@ -21,22 +21,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $mailSetting = SmtpSetting::first();
-        if (! empty($mailSetting)) {
+        $mailsetting = SmtpSetting::firstOrFail();
+        if (! empty($mailsetting)) {
             $data_mail = [
-                'driver' => $mailSetting->mail_mailer,
-                'host' => $mailSetting->mail_host,
-                'port' => $mailSetting->mail_port,
-                'encryption' => $mailSetting->mail_encryption,
-                'username' => $mailSetting->mail_username,
-                'password' => $mailSetting->password,
+                'driver' => $mailsetting->mail_mailer,
+                'host' => $mailsetting->mail_host,
+                'port' => $mailsetting->mail_port,
+                'encryption' => $mailsetting->mail_encryption,
+                'username' => $mailsetting->mail_username,
+                'password' => $mailsetting->mail_password,
                 'from' => [
-                    'address' => $mailSetting->mail_from_address,
-                    'name' => $mailSetting->website_name,
+                    'address' => $mailsetting->mail_from_address,
+                    'name' => $mailsetting->website_name,
                 ],
             ];
 
             Config::set('mail', $data_mail);
         }
+
     }
 }

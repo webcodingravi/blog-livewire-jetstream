@@ -74,6 +74,6 @@ class Login extends Component
 
     public function render()
     {
-        return view('auth.login')->layout('layouts.guest')->layoutData(['metaData' => 'Blog - Register']);
+        return view('auth.login')->layout('layouts.guest')->layoutData(['metaTitle' => 'Login']);
     }
 }
