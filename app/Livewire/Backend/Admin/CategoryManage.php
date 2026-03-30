@@ -195,6 +195,6 @@ class CategoryManage extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('backend.admin.category-manage', compact('categories'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Category Manage - Admin']);
+        return view('backend.admin.category-manage', compact('categories'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Category Manage']);
     }
 }

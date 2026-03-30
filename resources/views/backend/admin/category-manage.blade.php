@@ -141,7 +141,7 @@
                                         <td class="p-6">
                                             <span class="text-sm text-gray-900">
 
-                                                {{ \Carbon\Carbon::parse($category->created_at)->format('d M Y') }}
+                                                {{ $category->created_at->format('d M Y') }}
                                             </span>
                                         </td>
                                         <td class="p-6 text-sm font-medium flex gap-1">

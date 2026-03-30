@@ -270,6 +270,6 @@ class PostManage extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('backend.admin.post-manage', compact('posts'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Post Manage - Admin']);
+        return view('backend.admin.post-manage', compact('posts'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Post Manage']);
     }
 }

@@ -29,6 +29,6 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('backend.admin.dashboard')->layout('layouts.admin')->layoutData(['metaTitle' => 'Dashboard - Admin']);
+        return view('backend.admin.dashboard')->layout('layouts.admin')->layoutData(['metaTitle' => 'Dashboard']);
     }
 }

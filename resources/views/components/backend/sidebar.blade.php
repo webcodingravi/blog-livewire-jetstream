@@ -1,10 +1,18 @@
 <div>
+
     <div id="sidebar"
         class="min-h-screen fixed bg-black/50 left-0 w-64 bg-gray-950 text-white transform -translate-x-full md:translate-x-0 md:static md:inset-0 transition duration-300 z-30 ">
         <div class="lg:p-2 px-7 py-2  border-b border-gray-700 lg:ps-6 flex justify-between items-center">
-            <a href="{{ route('home') }}">
-                <img src="{{ asset('assets/img/logo.png') }}" class="w-20 h-20">
-            </a>
+            @if ($setting->logo)
+                <a href="{{ route('home') }}" wire:navigate>
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="logo"
+                        class="w-20 h-20 object-cover cursor-pointer">
+                </a>
+            @elseif ($setting->website_name)
+                <a href="{{ route('home') }}" wire:navigate>
+                    <h1 class="font-extrabold text-3xl uppercase text-white">{{ $setting->website_name }}</h1>
+                </a>
+            @endif
 
         </div>
         <nav class="p-4 space-y-2" wire:navigate id="closeBtn">
@@ -85,12 +93,27 @@
                     Posts</a>
             @endrole
 
+            @role('admin')
+                <a href="{{ route('admin.comments') }}" wire:navigate
+                    class="inline-flex gap-2 px-3 py-2 rounded hover:bg-gray-700 w-full {{ Request::segment(2) === 'comments' ? 'bg-gray-700' : '' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-message-circle-check-icon lucide-message-circle-check">
+                        <path
+                            d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+                        <path d="m9 12 2 2 4-4" />
+                    </svg>
+                    Comments</a>
+            @endrole
+
+
+
             @can('manage_settings')
                 <a href="{{ route('admin.settings') }}" wire:navigate
                     class="inline-flex gap-2 w-full px-3 py-2 rounded hover:bg-gray-700 {{ Request::segment(2) === 'settings' ? 'bg-gray-700' : '' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-monitor-cog-icon lucide-monitor-cog">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-monitor-cog-icon lucide-monitor-cog">
                         <path d="M12 17v4" />
                         <path d="m14.305 7.53.923-.382" />
                         <path d="m15.228 4.852-.923-.383" />
@@ -106,6 +129,13 @@
                     </svg>
                     Settings</a>
             @endcan
+
+                @role('admin')
+                <a href="{{ route('admin.permission') }}" wire:navigate
+                    class="inline-flex gap-2 px-3 py-2 rounded hover:bg-gray-700 w-full {{ Request::segment(2) === 'permission' ? 'bg-gray-700' : '' }}">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-key-icon lucide-user-key"><path d="M20 11v6"/><path d="M20 13h2"/><path d="M3 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 2.072.578"/><circle cx="10" cy="7" r="4"/><circle cx="20" cy="19" r="2"/></svg>
+                    Role & Permission</a>
+            @endrole
         </nav>
     </div>
 </div>

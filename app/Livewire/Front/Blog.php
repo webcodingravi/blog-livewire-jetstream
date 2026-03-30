@@ -19,6 +19,8 @@ class Blog extends Component
 
     public $tagName;
 
+    public $category;
+
     public function mount($categorySlug = null)
     {
         $this->categorySlug = $categorySlug;
@@ -28,7 +30,13 @@ class Blog extends Component
             ->limit(4)->get();
 
         $this->tags = Tag::has('posts')->withCount('posts')->orderBy('name')->get();
+        $this->category = Category::where('slug', $categorySlug)->firstOrFail();
 
+    }
+
+    public function filterByTag($tagSlug)
+    {
+        $this->tagName = $tagSlug;
     }
 
     public function render()

@@ -2,16 +2,75 @@
     <header class="bg-gray-950 text-white fixed w-full z-50" x-data="{ menu: false, search: false }">
         <nav class="w-11/12 mx-auto">
             <div class="lg:py-8 py-2 flex items-center justify-between">
-                <a href="{{ route('home') }}" wire:navigate>
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="logo"
-                        class="w-20 h-20 object-cover cursor-pointer">
-                </a>
+                @if ($setting->logo)
+                    <a href="{{ route('home') }}" wire:navigate>
+                        <img src="{{ asset('assets/img/logo.png') }}" alt="logo"
+                            class="w-20 h-20 object-cover cursor-pointer">
+                    </a>
+                @elseif ($setting->website_name)
+                    <a href="{{ route('home') }}" wire:navigate>
+                        <h1 class="font-extrabold text-3xl uppercase text-white">{{ $setting->website_name }}</h1>
+                    </a>
+                @endif
+
 
                 <div class="max-w-3xl w-full relative lg:block hidden">
-                    <input type="text"
+                    <input type="search" wire:model.live.debounce.500ms="search"
                         class="py-4 pl-14 pr-3 text-md border rounded-full border-gray-600 bg-transparent w-full placholder:text-gray-800 text-gray-400 font-medium focus:outline-none focus:ring-0 focus:ring-transparent focus:border-gray-600"
-                        placeholder="Search News...">
+                        placeholder="Search...">
                     <i class="ri-search-line absolute top-4 left-6 text-xl s text-gray-600 "></i>
+
+                    <!-- Search Result -->
+                    @if (!empty($results))
+
+                        <div x-show="open" class="absolute bg-white shadow-xl w-full mt-1 rounded-lg z-50 border">
+
+                            @foreach ($results as $blog)
+                                <a href="{{ route('blog-details', $blog->slug) }}" wire:navigate
+                                    class="flex items-center gap-3 p-3 hover:bg-gray-100 transition">
+
+                                    <!-- Product Image -->
+
+                                    @if ($blog->image)
+                                        <img src="{{ asset('storage/uploads/posts/' . $blog->image) }}"
+                                            class="w-12 h-12 object-cover rounded">
+                                    @endif
+
+                                    <!-- Product Info -->
+
+                                    <div class="flex-1">
+
+                                        <p class="text-sm font-semibold text-gray-800 line-clamp-1">
+                                            {{ $blog->title }}
+                                        </p>
+
+                                        <p class="text-sm text-gray-500">
+                                            {{ $blog->category->name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500">
+                                            By {{ $blog->user->name }}
+                                        </p>
+
+                                    </div>
+
+                                </a>
+                            @endforeach
+
+
+                            {{-- No product found --}}
+                            @if (count($results) == 0)
+                                <div class="p-4 text-sm text-gray-500 text-center">
+                                    No products found
+                                </div>
+                            @endif
+
+
+
+                        </div>
+
+                    @endif
+
+
                 </div>
 
 
@@ -89,8 +148,8 @@
                                     <button
                                         class="text-gray-600 inline-flex gap-2 text-sm hover:bg-gray-100 w-full rounded cursor-pointer px-4 py-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                             class="lucide lucide-log-out-icon lucide-log-out">
                                             <path d="m16 17 5-5-5-5" />
                                             <path d="M21 12H9" />
@@ -122,7 +181,9 @@
                 @if (count($categories) > 0)
                     @foreach ($categories as $category)
                         <a href="{{ route('blog', $category->slug) }}" wire:navigate
-                            class="hover:text-rose-500">{{ $category->name }}</a>
+                            class="hover:text-gray-500 {{ $category->slug == request()->segment(2) ? 'text-gray-500' : '' }}">
+                            {{ $category->name }}
+                        </a>
                     @endforeach
                 @endif
 
@@ -133,10 +194,59 @@
             <div class="absolute right-4 left-4 top-[120px] w-[80%] mx-auto lg:hidden" x-show="search"
                 x-transition:enter="transition ease-in-out duration-300" x-transition:enter-start="-translate-y-2"
                 x-transition:enter-end="translate-y-0">
-                <input type="text"
+                <input type="search" wire:model.live.debounce.500ms="search"
                     class="py-4 ps-12 pr-4 border border-white focus:border-white rounded-full w-full placholder:text-gray-800 text-gray-400 font-medium focus:outline-none focus:ring-0 focus:ring-transparent focus:border-gray-60"
                     placeholder="Search..">
-                <i class="ri-search-line absolute top-4 left-5 text-3xl text-gray-600 "></i>
+                <i class="ri-search-line absolute top-4 left-5 text-xl text-gray-600 "></i>
+                <!-- Search Result -->
+                @if (!empty($results))
+
+                    <div x-show="open" class="absolute bg-white shadow-xl w-full mt-1 rounded-lg z-50 border">
+
+                        @foreach ($results as $blog)
+                            <a href="{{ route('blog-details', $blog->slug) }}" wire:navigate
+                                class="flex items-center gap-3 p-3 hover:bg-gray-100 transition">
+
+                                <!-- Product Image -->
+
+                                @if ($blog->image)
+                                    <img src="{{ asset('storage/uploads/posts/' . $blog->image) }}"
+                                        class="w-12 h-12 object-cover rounded">
+                                @endif
+
+                                <!-- Product Info -->
+
+                                <div class="flex-1">
+
+                                    <p class="text-sm font-semibold text-gray-800 line-clamp-1">
+                                        {{ $blog->title }}
+                                    </p>
+
+                                    <p class="text-sm text-gray-500">
+                                        {{ $blog->category->name }}
+                                    </p>
+                                    <p class="text-sm text-gray-500">
+                                        By {{ $blog->user->name }}
+                                    </p>
+
+                                </div>
+
+                            </a>
+                        @endforeach
+
+
+                        {{-- No product found --}}
+                        @if (count($results) == 0)
+                            <div class="p-4 text-sm text-gray-500 text-center">
+                                No products found
+                            </div>
+                        @endif
+
+
+
+                    </div>
+
+                @endif
             </div>
 
 

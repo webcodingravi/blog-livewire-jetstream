@@ -1,8 +1,10 @@
 <div>
     <section class="bg-slate-800 lg:pt-[300px] pt-[230px] pb-9">
-        <h1 class="text-3xl font-semibold text-center mx-auto text-gray-400">Blogs</h1>
+        <h1 class="text-3xl font-semibold text-center mx-auto text-gray-400">{{ ucfirst($category->name) }}</h1>
         <p class="text-sm text-slate-500 text-center mt-2 max-w-lg mx-auto">
-            Stay ahead of the curve with fresh content on code, design, startups, and everything in between.
+            categories of {{ ucfirst($category->name) }}. Explore our latest articles and stay updated with the trends
+            in
+            technology, lifestyle, and more.
 
         </p>
         <div class="w-11/12 mx-auto flex flex-col-reverse lg:flex-row items-start gap-8 mt-12">
@@ -44,7 +46,7 @@
 
                 <!-- 🆕 Latest Posts -->
                 <div class="flex flex-col gap-4">
-                    <h3 class="text-lg font-semibold text-white">Latest Posts</h3>
+                    <h3 class="text-lg font-semibold text-white">Latest Blogs</h3>
 
                     <div class="flex flex-col gap-4">
 
@@ -76,7 +78,7 @@
 
                     <div class="flex flex-wrap gap-2">
                         @foreach ($tags as $tag)
-                            <span wire:click="$set('tagName', '{{ $tag->name }}')"
+                            <span wire:click="filterByTag('{{ $tag->name }}')"
                                 class="px-3
                                 py-1 bg-gray-700 text-gray-300 rounded-full text-sm hover:bg-indigo-500 hover:text-white
                                 cursor-pointer">{{ $tag->name }}

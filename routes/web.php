@@ -3,8 +3,10 @@
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Backend\Admin\CategoryManage;
+use App\Livewire\Backend\Admin\CommentManage;
 use App\Livewire\Backend\Admin\Dashboard;
 use App\Livewire\Backend\Admin\PostManage;
+use App\Livewire\Backend\Admin\RoleAndPermissionManage;
 use App\Livewire\Backend\Admin\SettingsManage;
 use App\Livewire\Backend\Admin\UserManage;
 use App\Livewire\Backend\Author\PendingAuthor as AuthorPendingAuthor;
@@ -38,6 +40,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth:sanc
     Route::get('/users', UserManage::class)->name('users');
     Route::get('/categories', CategoryManage::class)->name('category');
     Route::get('/posts', PostManage::class)->name('post');
+    Route::get('/comments', CommentManage::class)->name('comments');
+    Route::get('/permission', RoleAndPermissionManage::class)->name('permission');
     Route::get('/settings', SettingsManage::class)->name('settings');
 
 });

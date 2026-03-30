@@ -18,48 +18,30 @@
         <div class="relative z-10 flex flex-col gap-8 max-w-8xl mx-auto ">
             <div class="text-center max-w-6xl">
                 <h1 class="text-white text-3xl lg:text-6xl font-bold uppercase mb-3">
-                    Bulvinar Neque Laoreet Suspendisse Interdum
+                    Welcome to Our Blog
                 </h1>
 
-                <p class="text-gray-300 text-lg">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+                    Dive into a world of insights, stories, and inspiration. Explore our latest articles and stay
+                    updated with the trends in technology, lifestyle, and more.
                 </p>
             </div>
 
 
-            @if (count($latestPost) > 0)
-                <div
-                    class="flex lg:flex-wrap flex-col lg:flex-row lg:items-center lg:justify-center gap-8 py-16 lg:px-0 px-4">
-                    @foreach ($latestPost as $post)
-                        <div class="relative group hover:-translate-y-1 transition duration-300">
 
-                            <a href="{{ route('blog-details', $post->slug) }}">
-                                <!-- Image -->
-                                <img class="w-full h-[200px] object-cover rounded-xl"
-                                    src="{{ asset('storage/uploads/posts/' . $post->image) }}"
-                                    alt="{{ $post->title }}">
+            <div class="grid gird-cols-1 lg:grid-cols-3 gap-8 py-16 lg:px-0 px-4">
 
-                            </a>
-
-                            <span
-                                class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full shadow-md">
-                                <a href="{{ route('blog', $post->category->slug) }}" wire:navigate>
-                                    {{ strtoupper($post->category->name) }}
-                                </a>
-                            </span>
-
-                            <a href="{{ route('blog-details', $post->slug) }}" wire:navigate>
-                                <h3 class="text-base text-slate-300 mt-3">
-                                    {{ $post->title }}
-                                </h3>
-                            </a>
-
-
-                        </div>
+                @if (count($latestPost) > 0)
+                    @foreach ($latestPost as $index => $blog)
+                        <livewire:components.front.blog.blog-list lazy :blog="$blog" :key="$index" />
                     @endforeach
-                </div>
-            @endif
+                @else
+                    <h1>No Found</h1>
+                @endif
+
+
+            </div>
+
 
         </div>
 

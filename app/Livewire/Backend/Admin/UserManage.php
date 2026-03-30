@@ -119,6 +119,6 @@ class UserManage extends Component
 
             ->orderBy('id', 'desc')->paginate(10);
 
-        return view('backend.admin.user-manage', compact('users'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Users Manage - Admin']);
+        return view('backend.admin.user-manage', compact('users'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Users Manage']);
     }
 }
