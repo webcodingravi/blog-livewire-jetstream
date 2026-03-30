@@ -9,7 +9,7 @@
         </p>
         <div class="w-11/12 mx-auto flex flex-col-reverse lg:flex-row items-start gap-8 mt-12">
 
-            <div class="w-full lg:w-2/2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="w-full lg:w-[75%] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 @if (count($blogs) > 0)
                     @foreach ($blogs as $index => $blog)
@@ -68,14 +68,12 @@
                         @endif
 
 
-
                     </div>
                 </div>
 
                 <!-- 🏷️ Tags -->
                 <div class="flex flex-col gap-4">
                     <h3 class="text-lg font-semibold text-white">Tags</h3>
-
                     <div class="flex flex-wrap gap-2">
                         @foreach ($tags as $tag)
                             <span wire:click="filterByTag('{{ $tag->name }}')"
@@ -85,8 +83,6 @@
                                 ({{ $tag->posts_count }})
                             </span>
                         @endforeach
-
-
                     </div>
                 </div>
 

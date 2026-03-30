@@ -16,7 +16,7 @@
         </div>
 
 
-        <div class="flex lg:flex-row flex-col lg:justify-between gap-8 mb-10">
+        <div class="flex lg:flex-row flex-col lg:justify-between gap-8 mb-10 text-gray-300">
             <div class="lg:w-[70%] w-full">
                 {{-- Blog Title --}}
                 <a href="">
@@ -30,7 +30,7 @@
                 </div>
 
                 {{-- Blog Content --}}
-                <div class="prose max-w-full mb-8 text-gray-300 rounded">
+                <div class="prose  prose-invert  max-w-full mb-8 text-gray-300 rounded">
                     {!! $blog->description !!}
                 </div>
             </div>
@@ -56,7 +56,8 @@
 
                 <!-- 🆕 Latest Posts -->
                 <div class="flex flex-col gap-4">
-                    <h3 class="text-lg font-semibold text-white">Latest Posts</h3>
+                    <h3 class="text-lg font-semibold text-white">Latest Posts
+                    </h3>
 
                     <div class="flex flex-col gap-4">
 

@@ -1,7 +1,7 @@
 <div>
     <div
-        class="flex flex-col gap-2  group cursor-pointer relative border border-gray-700 rounded-lg overflow-hidden bg-white/5 hover:bg-white/10 transition-colors duration-300">
-        <a href="{{ route('blog-details', $blog->slug) }}"
+        class="flex flex-col gap-2 min-h-[350px]  group cursor-pointer relative border border-gray-700 rounded-lg overflow-hidden bg-white/5 hover:bg-white/10 transition-colors duration-300">
+        <a href="{{ route('blog-details', $blog->slug) }}" wire:navigate
             class="block bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
             <img src="{{ asset('storage/uploads/posts/' . $blog->image) }}" alt="{{ $blog->title }}"
                 class="w-full h-48 object-cover">

@@ -62,7 +62,7 @@ class CommentManage extends Component
                 $query->orWhere('comment', 'like', '%'.$this->search.'%');
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(7);
 
         return view('backend.admin.comment-manage', compact('comments'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Comments Manage']);
     }

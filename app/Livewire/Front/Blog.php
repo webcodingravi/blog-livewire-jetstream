@@ -21,6 +21,10 @@ class Blog extends Component
 
     public $category;
 
+    public $metaTitle = 'Blog';
+
+    public $metaDiscription = 'Blog';
+
     public function mount($categorySlug = null)
     {
         $this->categorySlug = $categorySlug;
@@ -31,6 +35,10 @@ class Blog extends Component
 
         $this->tags = Tag::has('posts')->withCount('posts')->orderBy('name')->get();
         $this->category = Category::where('slug', $categorySlug)->firstOrFail();
+        if ($this->category) {
+            $this->metaTitle = $this->category->meta_title ?? $this->category->name;
+            $this->metaDiscription = $this->category->meta_description ?? $this->category->name;
+        }
 
     }
 
@@ -56,6 +64,6 @@ class Blog extends Component
             ->latest()
             ->paginate(10);
 
-        return view('front.blog', compact('blogs'))->layoutData(['metaTitle' => 'Blog', 'metaDiscription' => 'Blog']);
+        return view('front.blog', compact('blogs'))->layoutData(['metaTitle' => $this->metaTitle, 'metaDiscription' => $this->metaDiscription]);
     }
 }

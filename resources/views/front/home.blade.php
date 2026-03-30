@@ -15,7 +15,7 @@
             </svg>
         </div>
 
-        <div class="relative z-10 flex flex-col gap-8 max-w-8xl mx-auto ">
+        <div class="relative z-10 flex flex-col gap-8 max-w-6xl mx-auto ">
             <div class="text-center max-w-6xl">
                 <h1 class="text-white text-3xl lg:text-6xl font-bold uppercase mb-3">
                     Welcome to Our Blog
@@ -30,7 +30,6 @@
 
 
             <div class="grid gird-cols-1 lg:grid-cols-3 gap-8 py-16 lg:px-0 px-4">
-
                 @if (count($latestPost) > 0)
                     @foreach ($latestPost as $index => $blog)
                         <livewire:components.front.blog.blog-list lazy :blog="$blog" :key="$index" />
@@ -38,7 +37,6 @@
                 @else
                     <h1>No Found</h1>
                 @endif
-
 
             </div>
 

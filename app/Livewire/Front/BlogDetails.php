@@ -30,6 +30,10 @@ class BlogDetails extends Component
 
     public $comments = [];
 
+    public $metaTitle = 'Blog';
+
+    public $metaDescription = 'Blog';
+
     public function mount($blogSlug)
     {
         $this->blog = Post::with('category', 'user:id,name')->where('slug', $blogSlug)->firstOrFail();
@@ -49,6 +53,12 @@ class BlogDetails extends Component
 
         $this->tags = Tag::has('posts')->withCount('posts')->orderBy('name')->get();
         $this->loadComments();
+
+        if ($this->blog) {
+            $this->metaTitle = $this->blog->meta_title ?? $this->blog->title;
+            $this->metaDescription = $this->blog->meta_description ?? $this->blog->title;
+        }
+
     }
 
     public function filterByTag($tagSlug)
@@ -96,6 +106,6 @@ class BlogDetails extends Component
 
     public function render()
     {
-        return view('front.blog-details');
+        return view('front.blog-details')->layoutData(['metaTitle' => $this->metaTitle, 'metaDescription' => $this->metaDescription]);
     }
 }

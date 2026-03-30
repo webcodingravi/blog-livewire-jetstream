@@ -193,7 +193,7 @@ class CategoryManage extends Component
                 $query->where('status', (int) $this->filterStatus);
             })
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(7);
 
         return view('backend.admin.category-manage', compact('categories'))->layout('layouts.admin')->layoutData(['metaTitle' => 'Category Manage']);
     }
