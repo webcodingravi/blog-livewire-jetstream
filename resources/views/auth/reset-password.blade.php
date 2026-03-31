@@ -17,6 +17,7 @@
 
 
                 <div class="w-full relative mt-6" x-data="{ show: false }">
+                    <input type="email" wire:model="email" hidden value="{{ request()->email }}" />
                     <div>
                         <input :type="show ? 'text' : 'password'" placeholder="New Password..."
                             wire:model.live.debounce.500ms="password"

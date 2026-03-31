@@ -15,14 +15,19 @@ class ResetPassword extends Component
 
     public $password_confirmation;
 
+    public $email;
+
     public function mount($token)
     {
         $this->token = $token;
+        $this->email = request()->email;
+
     }
 
     protected $rules = [
         'password' => 'required|min:8|max:40|confirmed',
         'password_confirmation' => 'required',
+        'token' => 'required|string',
     ];
 
     public function updatedPassword()
@@ -44,7 +49,8 @@ class ResetPassword extends Component
 
         try {
             $status = Password::reset(
-                ['password' => $this->password,
+                ['email' => $this->email,
+                    'password' => $this->password,
                     'password_confirmation' => $this->password_confirmation,
                     'token' => $this->token,
                 ],
@@ -60,9 +66,9 @@ class ResetPassword extends Component
                 session()->flash('success', 'Password Successfully Reset');
 
                 return $this->redirectRoute('login', navigate: true);
+            } else {
+                session()->flash('error', 'Reset Failed');
             }
-
-            session()->flash('error', 'Reset Failed');
 
         } catch (\Exception $e) {
             session()->flash('error', 'An error occurred while resetting the password. Please try again.');

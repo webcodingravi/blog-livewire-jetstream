@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use App\Notifications\NewUserRegisterNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -46,10 +47,11 @@ class Register extends Component
             $validated['status'] = $this->want_author ? 'pending' : 'approved';
             $user = User::create($validated);
 
-            if ($this->want_author) {
-                $user->assignRole('user');
-            } else {
-                $user->assignRole('user');
+            $user->assignRole('user');
+
+            $admins = User::role('admin')->get();
+            foreach ($admins as $admin) {
+                $admin->notify(new NewUserRegisterNotification($user));
             }
 
             DB::commit();

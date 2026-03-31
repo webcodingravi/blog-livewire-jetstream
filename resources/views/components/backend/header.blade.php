@@ -10,7 +10,14 @@
             </svg>
         </button>
         <div></div>
+
+
+
         <div class="flex items-center space-x-3 relative" x-data="{ openDropDown: false }">
+            @role('admin')
+                <livewire:components.backend.admin-notification-bell />
+            @endrole
+
             <span class="text-gray-600">{{ ucFirst(auth()->user()->name) }}</span>
             <img src="{{ Auth::user()->profile_photo_path ? asset('storage/' . Auth::user()->profile_photo_path) : 'https://cdn.vectorstock.com/i/500p/46/76/gray-male-head-placeholder-vector-23804676.jpg' }}"
                 @click="openDropDown=!openDropDown" class="w-10 h-10 rounded-full cursor-pointer" alt="avatar">

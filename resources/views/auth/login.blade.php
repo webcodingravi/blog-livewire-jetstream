@@ -117,7 +117,7 @@
                     </svg>
                 </button>
 
-
+                {{--
                 <div class="flex items-center w-full my-5">
                     <div class="w-full h-px bg-gray-300/90"></div>
                     <p class="w-full text-nowrap text-sm text-gray-500/90 text-center">OR</p>
@@ -128,7 +128,7 @@
                     class="w-full mt-8 bg-gray-500/10 flex items-center justify-center h-12 rounded-full">
                     <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"
                         alt="googleLogo">
-                </button>
+                </button> --}}
             </form>
 
             <p class="text-gray-500/90 text-sm mt-4">Don't Have an account? <a class="text-indigo-400 hover:underline"
