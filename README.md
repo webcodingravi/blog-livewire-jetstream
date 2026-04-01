@@ -32,7 +32,7 @@ Users can register, login, read blogs, and admins can manage content.
 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/blog-website.git
+git clone https://github.com/webcodingravi/blog-livewire-jetstream.git
 cd blog-website
 
 # 📰 Blog Website
