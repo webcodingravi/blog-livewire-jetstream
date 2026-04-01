@@ -37,6 +37,7 @@ class BlogDetails extends Component
     public function mount($blogSlug)
     {
         $this->blog = Post::with('category', 'user:id,name')->where('slug', $blogSlug)->firstOrFail();
+        $this->blog->increment('views');
         $this->retaledBlogs = Post::with('category', 'user:id,name')
             ->where('category_id', $this->blog->category_id)
             ->where('id', '!=', $this->blog->id)

@@ -85,7 +85,7 @@
                                        </th>
                                        <th
                                            class="p-6 text-xs font-medium tracking-wider text-left text-gray-200 uppercase bg-gray-700">
-                                           Slug
+                                           Views
                                        </th>
 
                                        <th
@@ -132,10 +132,19 @@
                                                    </span>
                                                </td>
                                                <td class="p-6 ">
-                                                   <span class="text-sm text-gray-900">
 
-                                                       {{ $post->slug }}
+                                                   <span class="text-sm text-gray-900 inline-flex gap-1">
+                                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                           viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                           stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                           class="lucide lucide-eye-icon lucide-eye">
+                                                           <path
+                                                               d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                                                           <circle cx="12" cy="12" r="3" />
+                                                       </svg>
+                                                       {{ $post->views }}
                                                    </span>
+
                                                </td>
 
                                                <td class="p-6">
@@ -191,8 +200,8 @@
                                                                class="ml-2 text-red-600 hover:text-red-900">
                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                                    height="20" viewBox="0 0 24 24" fill="none"
-                                                                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                                   stroke-linejoin="round"
+                                                                   stroke="currentColor" stroke-width="2"
+                                                                   stroke-linecap="round" stroke-linejoin="round"
                                                                    class="lucide lucide-trash2-icon lucide-trash-2">
                                                                    <path d="M10 11v6" />
                                                                    <path d="M14 11v6" />
