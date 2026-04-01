@@ -27,13 +27,7 @@ Users can register, login, read blogs, and admins can manage content.
 
 ---
 
-## 📦 Installation
 
-1. Clone the repository
-
-```bash
-git clone https://github.com/webcodingravi/blog-livewire-jetstream.git
-cd blog-website
 
 # 📰 Blog Website
 
@@ -69,7 +63,7 @@ Users can register, login, read blogs, and admins can manage content.
 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/blog-website.git
+git clone https://github.com/webcodingravi/blog-livewire-jetstream.git
 cd blog-website
 
 2. Install dependencies
